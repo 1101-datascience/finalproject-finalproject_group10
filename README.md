@@ -50,14 +50,20 @@ Rscript modeling.R --train train_0109_tg.csv --test test_0106.csv --report perfo
 ### results
 
 * Which metric do you use 
-  * MSE、RMSE、R-squared
+  * MSE、RMSE、R-square
 * Is your improvement significant?
+  * no,R-Squared通常以0.01成長
 * What is the challenge part of your project?
+  * 原始資料的數值和類別是匿名的，難以判斷分析
+  * 原始資料龐大且分散，需要多層處理。主表上只有3個特徵，最後我們共造出84個特徵
+  * 檔案很大，導致部署到ShinyIO或prepocessing、modeling時，會因為out of memory無法正常運作。
 
 ## References
 * Some of our feature engineering is inspired by this notebook: https://www.kaggle.com/samaujs/elo-eda-ml
 * One of challenge in the dataset is that lots of features are anonymized, discussion could be found: https://www.kaggle.com/sreeedevi/merchant-rating-variables-revealed
 * modeling's code: https://rpubs.com/jiankaiwang/rf
+* evaluation: https://rpubs.com/ivan0628/numerical_model_evaluation
+* model tuning: https://stackoverflow.com/questions/34997134/random-forest-tuning-tree-depth-and-number-of-trees
 
 * Packages you use
  * randomForest
@@ -65,5 +71,6 @@ Rscript modeling.R --train train_0109_tg.csv --test test_0106.csv --report perfo
  * lubridate
  * plyr
  * dplyr
+ * Metrics
 
 * Related publications
