@@ -14,7 +14,7 @@ A breif introduction about your project, i.e., what is your goal?
 ### Demo 
 You should provide an example commend to reproduce your result
 ```R
-Rscript code/your_script.R --input data/training --output results/performance.tsv
+Rscript modeling.R --train train_0109_tg.csv --test test_0106.csv --report performance.csv --predict predict.csv
 ```
 
 
