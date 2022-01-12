@@ -1,8 +1,9 @@
 # [GroupID] Title of your final project
 
 ### Groups
-* name, student ID1
-* name, student ID2
+* 劉柏毅, 106305022
+* 林藝潔, 108703005
+* 郭沛澐, 108703006
 * name, student ID3
 * ...
 
@@ -26,7 +27,7 @@ Rscript code/your_script.R --input data/training --output results/performance.ts
 
 ### data
 
-* Source
+* Kaggle: https://www.kaggle.com/c/elo-merchant-category-recommendation
 * Input format
 * Any preprocessing?
   * Handle missing data
@@ -46,6 +47,8 @@ Rscript code/your_script.R --input data/training --output results/performance.ts
 * What is the challenge part of your project?
 
 ## References
+* Some of our feature engineering is inspired by this notebook: https://www.kaggle.com/samaujs/elo-eda-ml
+* One of challenge in the dataset is that lots of features are anonymized, discussion could be found: https://www.kaggle.com/sreeedevi/merchant-rating-variables-revealed
 * Code/implementation which you include/reference (__You should indicate in your presentation if you use code for others. Otherwise, cheating will result in 0 score for final project.__)
 * Packages you use
 * Related publications
