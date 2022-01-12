@@ -41,13 +41,16 @@ Rscript modeling.R --train train_0109_tg.csv --test test_0106.csv --report perfo
 ### code
 
 * Which method do you use?
+  * random forest
 * What is a null model for comparison?
+  * kaggle提供的kaggle值為3.87852
 * How do your perform evaluation? ie. cross-validation, or addtional indepedent data set
+  * 82分為train、test
 
 ### results
 
 * Which metric do you use 
-  * precision, recall, R-square
+  * MSE、RMSE、R-squared
 * Is your improvement significant?
 * What is the challenge part of your project?
 
