@@ -57,6 +57,8 @@ Rscript modeling.R --train train_0109_tg.csv --test test_0106.csv --report perfo
 ## References
 * Some of our feature engineering is inspired by this notebook: https://www.kaggle.com/samaujs/elo-eda-ml
 * One of challenge in the dataset is that lots of features are anonymized, discussion could be found: https://www.kaggle.com/sreeedevi/merchant-rating-variables-revealed
+* 
 * Code/implementation which you include/reference (__You should indicate in your presentation if you use code for others. Otherwise, cheating will result in 0 score for final project.__)
 * Packages you use
+ * randomForest
 * Related publications
