@@ -362,7 +362,7 @@ check_missing_values(newmerchant_with_merchants_data)
 
 
 #Grouping newmerchants_with_merchants_data features
-#groupby1¡GTime
+#groupby1Â¡GTime
 group1_time <- newmerchant_with_merchants_data %>%
   group_by(card_id) %>%
   summarise(
@@ -402,7 +402,7 @@ check_missing_values(group1_time)
 summary(group1_time)
 group1_time$new_merchant_month_lag_std[is.na(group1_time$new_merchant_month_lag_std)] <- mean(group1_time$new_merchant_month_lag_std, na.rm = TRUE)
 
-#groupby2¡Gamount
+#groupby2Â¡Gamount
 newmerchant_with_merchants_data$new_merchant_purchase_amount_new <- round(newmerchant_with_merchants_data$purchase_amount / 0.00150265118 + 497.06,2)
 group2_amount <- newmerchant_with_merchants_data %>%
   group_by(card_id) %>%
@@ -420,7 +420,7 @@ group2_amount$new_merchant_purchase_amount_std[is.na(group2_amount$new_merchant_
 group2_amount$new_merchant_card_std_purchase_amount_new[is.na(group2_amount$new_merchant_card_std_purchase_amount_new)] <- mean(group2_amount$new_merchant_card_std_purchase_amount_new, na.rm = TRUE)
 
 
-#groupby3¡G
+#groupby3Â¡G
 group3_ <- newmerchant_with_merchants_data %>%
   group_by(card_id) %>%
   summarise(
@@ -464,8 +464,8 @@ summary(train_data)
 
 #backup_train <- train_data
 #backup_test <- test_data
-train_data <- backup_train
-test_data <- backup_test
+#train_data <- backup_train
+#test_data <- backup_test
 
 #Fill missing value of X_train & X_test
 fill_missing <- function(df){
