@@ -64,6 +64,7 @@ Rscript modeling.R --train train_0109_tg.csv --test test_0106.csv --report perfo
 * modeling's code: https://rpubs.com/jiankaiwang/rf
 * evaluation: https://rpubs.com/ivan0628/numerical_model_evaluation
 * model tuning: https://stackoverflow.com/questions/34997134/random-forest-tuning-tree-depth-and-number-of-trees
+*               https://jamleecute.web.app/random-forests-%E9%9A%A8%E6%A9%9F%E6%A3%AE%E6%9E%97/ 
 
 * Packages you use
  * randomForest
