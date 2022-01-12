@@ -464,8 +464,8 @@ summary(train_data)
 
 #backup_train <- train_data
 #backup_test <- test_data
-#train_data <- backup_train
-#test_data <- backup_test
+train_data <- backup_train
+test_data <- backup_test
 
 #Fill missing value of X_train & X_test
 fill_missing <- function(df){
@@ -482,8 +482,7 @@ test <- fill_missing(test_data)
 date_diff <- function(df){
   #df$first_active_month  = ymd_hms(df$first_active_month)
   df$first_active_month <- as.Date(paste(df$first_active_month, "01", sep = '-'), tz = "UTC")
-  df$first_active_month <- as.POSIXct(df$first_active_month)
-  df$first_active_month_today_elapsed_time <- as.integer(now() - df$first_active_month)
+  df$first_active_month_today_elapsed_time <- as.integer(now() - as.POSIXct(df$first_active_month))
   df$hist_pdmin_active_month_diff <- as.integer(df$hist_purchase_date_min - df$first_active_month)
   df$new_merchant_pdmin_active_month_diff <- as.integer(df$new_merchant_purchase_date_min - df$first_active_month)
   return(df)
@@ -524,19 +523,7 @@ test_data <- Ratio_features(test_data)
 
 # Filled mean information for the missing cards from newmerchant_data
 # Fill missing values with mean values; maybe use median value
-
-#excluded_features <- c(-first_active_month, -card_id, -target, -outliers)
-#train_features <- subset(temp, select = c(-first_active_mp, -card_id, -target, -outliers))
-fill_median <- function(df){
-  for(col in df){
-    if(is.double(typeof(df$col)) & col!=6){
-      df$col[is.na(df$col)] <- df$col.median() #mean
-    }
-  }
-  return(df)
-}
-#train_data <- fill_median(train_data)
-#test_data <- fill_median(test_data)
+####
 
 train_data[is.na(train_data)] <- 0
 #test_data[is.na(test_data)] <- 0
@@ -552,5 +539,5 @@ train_data$target_exp <- exp(train_data$target)
 test_data <- subset(test_data, select = c(-hist_purchase_date_max, -hist_purchase_date_min, -new_merchant_purchase_date_min, -new_merchant_purchase_date_min, -new_merchant_purchase_date_max))
 
 #output
-write.csv(train_data, 'train_data_part1_part2.csv', quote = F, row.names = T)
-write.csv(test_data, 'test_data_part1_part2.csv', quote = F, row.names = T)
+write.csv(train_data, 'train_data.csv', quote = F, row.names = T)
+write.csv(test_data, 'test_data.csv', quote = F, row.names = T)
