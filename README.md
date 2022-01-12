@@ -9,7 +9,7 @@
 * ...
 
 ### Goal
-A breif introduction about your project, i.e., what is your goal?
+The goal of our project is to predict the loyalty of customers towards the payment company Elo, one of the largest payment brands in Brazil. The company has built partnerships with merchants in order to offer promotions or discounts to cardholders, and this data science project will help them to assess their business model and know more about the customers' experience.
 
 ### Demo 
 You should provide an example commend to reproduce your result
