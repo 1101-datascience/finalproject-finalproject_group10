@@ -220,8 +220,13 @@ gc()
 check_missing_values(train_data)
 check_missing_values(test_data)
 
+train_data$hist_card_sum_authorized_flag_0_purchase_amount_mean[is.na(train_data$hist_card_sum_authorized_flag_0_purchase_amount_mean)] <- 
+  mean(train_data$hist_card_sum_authorized_flag_0_purchase_amount_mean, na.rm = TRUE)
+test_data$hist_card_sum_authorized_flag_0_purchase_amount_mean[is.na(test_data$hist_card_sum_authorized_flag_0_purchase_amount_mean)] <- 
+  mean(test_data$hist_card_sum_authorized_flag_0_purchase_amount_mean, na.rm = TRUE)
+
 ##backup
-bcakup_train <- train_data
+backup_train <- train_data
 backup_test <- test_data
 backup_hist <- historical_data
 backup_newm <- newmerchant_data
@@ -254,10 +259,7 @@ merchants_data$category_4 <- as.integer(merchants_data$category_4)
 merchants_data$most_recent_sales_range <- as.integer(merchants_data$most_recent_sales_range)
 merchants_data$most_recent_purchases_range <- as.integer(merchants_data$most_recent_purchases_range)
 
-
-#
 check_missing_values(merchants_data)
-sum(merchants_data$most_recent_sales_range)
 
 ##dealing with inf data##
 merchants_data$avg_sales_lag3[is.infinite(merchants_data$avg_sales_lag3)] <- NA
@@ -306,22 +308,17 @@ merge_merchants <- merchants_data %>%
   )
 
 check_missing_values(merge_merchants)
-#merge_merchants$merchants_category_1_mean[is.na(merge_merchants$merchants_category_1_mean)] <- 0
-#merge_merchants$merchants_category_4_mean[is.na(merge_merchants$merchants_category_4_mean)] <- 0
-#merge_merchants$merchants_avg_purchases_lag6_mean[is.na(merge_merchants$merchants_avg_purchases_lag6_mean)] <- 
-#  mean(merge_merchants$merchants_avg_purchases_lag6_mean, na.rm = TRUE)
-#merge_merchants$merchants_avg_purchases_lag12_mean[is.na(merge_merchants$merchants_avg_purchases_lag12_mean)] <- 
-#  mean(merge_merchants$merchants_avg_purchases_lag12_mean, na.rm = TRUE)
 summary(merge_merchants)
 #########################
-summary(merchants_data)
 
+summary(merchants_data$merchant_id)
 summary(newmerchant_data$merchant_id)
-sum(newmerchant_with_merchants_data)
+
 #merge newmerchant_data and merchants_data
 newmerchant_with_merchants_data <- merge(x = newmerchant_data, y = merge_merchants, by='merchant_id',all.x = TRUE)
 
 check_missing_values(newmerchant_with_merchants_data)
+summary(newmerchant_with_merchants_data$merchant_id)
 head(newmerchant_with_merchants_data)
 summary(newmerchant_with_merchants_data)
 
@@ -335,17 +332,22 @@ rm_na_or_inf <- function(df){
   df[is.na(df)] <- get_mode(df)
   return(df)
 }
+rm_null_or_inf <- function(df){
+  df[is.infinite(df)] <- NA
+  df[is.null(df)] <- 0
+  return(df)
+}
 
 newmerchant_with_merchants_data$merchants_avg_sales_lag3_mean <- rm_na_or_inf(newmerchant_with_merchants_data$merchants_avg_sales_lag3_mean)
-newmerchant_with_merchants_data$merchants_avg_purchases_lag3_mean <- rm_na_or_inf(newmerchant_with_merchants_data$merchants_avg_purchases_lag3_mean)
+newmerchant_with_merchants_data$merchants_avg_purchases_lag3_mean <- rm_null_or_inf(newmerchant_with_merchants_data$merchants_avg_purchases_lag3_mean)
 newmerchant_with_merchants_data$merchants_active_months_lag3_mean <- rm_na_or_inf(newmerchant_with_merchants_data$merchants_active_months_lag3_mean)
 
 newmerchant_with_merchants_data$merchants_avg_sales_lag6_mean <- rm_na_or_inf(newmerchant_with_merchants_data$merchants_avg_sales_lag6_mean)
-newmerchant_with_merchants_data$merchants_avg_purchases_lag6_mean <- rm_na_or_inf(newmerchant_with_merchants_data$merchants_avg_purchases_lag6_mean)
+newmerchant_with_merchants_data$merchants_avg_purchases_lag6_mean <- rm_null_or_inf(newmerchant_with_merchants_data$merchants_avg_purchases_lag6_mean)
 newmerchant_with_merchants_data$merchants_active_months_lag6_mean <- rm_na_or_inf(newmerchant_with_merchants_data$merchants_active_months_lag6_mean)
 
 newmerchant_with_merchants_data$merchants_avg_sales_lag12_mean <- rm_na_or_inf(newmerchant_with_merchants_data$merchants_avg_sales_lag12_mean)
-newmerchant_with_merchants_data$merchants_avg_purchases_lag12_mean <- rm_na_or_inf(newmerchant_with_merchants_data$merchants_avg_purchases_lag12_mean)
+newmerchant_with_merchants_data$merchants_avg_purchases_lag12_mean <- rm_null_or_inf(newmerchant_with_merchants_data$merchants_avg_purchases_lag12_mean)
 newmerchant_with_merchants_data$merchants_active_months_lag12_mean <- rm_na_or_inf(newmerchant_with_merchants_data$merchants_active_months_lag12_mean)
 
 newmerchant_with_merchants_data$merchants_most_recent_sales_range_mean <- rm_na_or_inf(newmerchant_with_merchants_data$merchants_most_recent_sales_range_mean)
@@ -357,6 +359,7 @@ newmerchant_with_merchants_data$merchants_numerical_1_mean <- rm_na_or_inf(newme
 newmerchant_with_merchants_data$merchants_numerical_2_mean <- rm_na_or_inf(newmerchant_with_merchants_data$merchants_numerical_2_mean)
 
 check_missing_values(newmerchant_with_merchants_data)
+
 
 #Grouping newmerchants_with_merchants_data features
 #groupby1¡GTime
@@ -397,6 +400,7 @@ group1_time$new_merchant_purchase_date_uptonow <- as.integer(now() - group1_time
 
 check_missing_values(group1_time)
 summary(group1_time)
+group1_time$new_merchant_month_lag_std[is.na(group1_time$new_merchant_month_lag_std)] <- mean(group1_time$new_merchant_month_lag_std, na.rm = TRUE)
 
 #groupby2¡Gamount
 newmerchant_with_merchants_data$new_merchant_purchase_amount_new <- round(newmerchant_with_merchants_data$purchase_amount / 0.00150265118 + 497.06,2)
@@ -454,11 +458,14 @@ check_missing_values(test_data)
 rm(group1_time)
 rm(group2_amount)
 rm(group3_)
-
-check_missing_values(train_data)
-check_missing_values(test_data)
 gc()
 summary(train_data)
+
+
+#backup_train <- train_data
+#backup_test <- test_data
+#train_data <- backup_train
+#test_data <- backup_test
 
 #Fill missing value of X_train & X_test
 fill_missing <- function(df){
@@ -471,20 +478,19 @@ fill_missing <- function(df){
 train <- fill_missing(train_data)
 test <- fill_missing(test_data)
 
-check_missing_values(train_data)
 #date_diff
 date_diff <- function(df){
   #df$first_active_month  = ymd_hms(df$first_active_month)
-  df$first_active_month <- as.POSIXct(paste(df$first_active_month, "01", sep = '-'), tz = "UTC")
+  df$first_active_month <- as.Date(paste(df$first_active_month, "01", sep = '-'), tz = "UTC")
+  df$first_active_month <- as.POSIXct(df$first_active_month)
   df$first_active_month_today_elapsed_time <- as.integer(now() - df$first_active_month)
-  df$hist_pdmin_active_month_diff <- (df$hist_purchase_date_min - df$first_active_month)
-  df$new_merchant_pdmin_active_month_diff <- (df$new_merchant_purchase_date_min - df$first_active_month)
+  df$hist_pdmin_active_month_diff <- as.integer(df$hist_purchase_date_min - df$first_active_month)
+  df$new_merchant_pdmin_active_month_diff <- as.integer(df$new_merchant_purchase_date_min - df$first_active_month)
   return(df)
 }
-
 train_data <- date_diff(train_data)
 test_data <- date_diff(test_data)
-summary(test)
+
 
 # Convert Timestamp to int64 with imputed missing values
 Convert_timestamp <- function(df){
@@ -514,6 +520,8 @@ Ratio_features <- function(df){
 train_data <- Ratio_features(train_data)
 test_data <- Ratio_features(test_data)
 
+
+
 # Filled mean information for the missing cards from newmerchant_data
 # Fill missing values with mean values; maybe use median value
 
@@ -523,22 +531,26 @@ fill_median <- function(df){
   for(col in df){
     if(is.double(typeof(df$col)) & col!=6){
       df$col[is.na(df$col)] <- df$col.median() #mean
-      
     }
   }
   return(df)
 }
-train_data <- fill_median(train_data)
-test_data <- fill_median(test_data)
+#train_data <- fill_median(train_data)
+#test_data <- fill_median(test_data)
 
+train_data[is.na(train_data)] <- 0
+#test_data[is.na(test_data)] <- 0
+
+check_missing_values(train_data)
+check_missing_values(test_data)
 
 #drop columns
 #drop_col <- c('hist_purchase_date_max', 'hist_purchase_date_min', 'new_merchant_purchase_date_min', 'new_merchant_purchase_date_min', 'new_merchant_purchase_date_max')
 train_data <- subset(train_data, select = c(-hist_purchase_date_max, -hist_purchase_date_min, -new_merchant_purchase_date_min, -new_merchant_purchase_date_min, -new_merchant_purchase_date_max))
 train_data <- train_data[train_data$target>-30]
-train_data$target_exp <- train_data[train_data$target]
+train_data$target_exp <- exp(train_data$target)
 test_data <- subset(test_data, select = c(-hist_purchase_date_max, -hist_purchase_date_min, -new_merchant_purchase_date_min, -new_merchant_purchase_date_min, -new_merchant_purchase_date_max))
 
 #output
-write.csv(train_data, 'train_data_part1_part2.csv', quote = F, row.names = F)
-write.csv(test_data, 'test_data_part1_part2.csv', quote = F, row.names = F)
+write.csv(train_data, 'train_data_part1_part2.csv', quote = F, row.names = T)
+write.csv(test_data, 'test_data_part1_part2.csv', quote = F, row.names = T)
