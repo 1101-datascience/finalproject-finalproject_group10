@@ -32,7 +32,7 @@ Rscript modeling.R --train train_0109_tg.csv --test test_0106.csv --report perfo
 ### data
 
 * Kaggle: https://www.kaggle.com/c/elo-merchant-category-recommendation
-* Input format
+* Input format: Dataset Training Data 201917 Customers x 84 (83 features + 1 target + 1 exp(target)). Testing Data 123623 x 83 features.
 * There are four datasets. One for customer profile, one for past transaction records, one for new transaction records and one for merchant details.
 * We first clean the merchant details. the main issue here include duplicated merchants with different properties, missing values in some of the merchant features. Next, we process transaction records by grouping up data from the same card_id and examine there mean, variance and more. Lastly, we try to construct some new features that measures the ratio or the difference between transaction behaviors in two time period.
 * Most of the missing values are imputed by either mode, mean or median based on the exploratory data analysis.
