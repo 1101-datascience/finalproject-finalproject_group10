@@ -3,8 +3,9 @@
 ### Groups
 * 劉柏毅, 106305022
 * 林藝潔, 108703005
-* 郭沛澐
-* 江宏繹, 108304016
+* 郭沛澐, 108703006
+* 鄭宛薰, 108703003
+* name, student ID3
 * ...
 
 ### Goal
@@ -15,7 +16,11 @@ You should provide an example commend to reproduce your result
 ```R
 Rscript code/your_script.R --input data/training --output results/performance.tsv
 ```
-* any on-line visualization
+
+
+#### on-line visualization
+* https://anita56yu.shinyapps.io/data_analysis/
+* https://anita56yu.shinyapps.io/model_analysis/
 
 ## Folder organization and its related information
 
