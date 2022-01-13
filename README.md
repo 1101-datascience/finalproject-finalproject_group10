@@ -46,6 +46,7 @@ Rscript modeling.R --train train_0109_tg.csv --test test_0106.csv --report perfo
   * kaggle提供的kaggle值為3.87852
 * How do your perform evaluation? ie. cross-validation, or addtional indepedent data set
   * 82分為train、test
+  * 建五個model，去掉最大和最小的預測值，以剩下三個預測數的平均，作為最終的預測值
 
 ### results
 
