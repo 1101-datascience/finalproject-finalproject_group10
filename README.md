@@ -36,6 +36,7 @@ Rscript modeling.R --train train_0109_tg.csv --test test_0106.csv --report perfo
 * There are four datasets. One for customer profile, one for past transaction records, one for new transaction records and one for merchant details.
 * We first clean the merchant details. the main issue here include duplicated merchants with different properties, missing values in some of the merchant features. Next, we process transaction records by grouping up data from the same card_id and examine there mean, variance and more. Lastly, we try to construct some new features that measures the ratio or the difference between transaction behaviors in two time period.
 * Most of the missing values are imputed by either mode, mean or median based on the exploratory data analysis.
+* Since the processed data is too big, we will upload it through cloud: https://drive.google.com/drive/folders/11UEHfoTjIopv38MvSmCNH7UICLZi84tn?usp=sharing
 
 
 ### code
