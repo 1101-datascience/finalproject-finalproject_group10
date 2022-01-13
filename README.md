@@ -57,8 +57,14 @@ Rscript modeling.R --train train_0109_tg.csv --test test_0106.csv --report perfo
   * no,R-Squared通常以0.01成長
 * What is the challenge part of your project?
   * 原始資料的數值和類別是匿名的，難以判斷分析
+    * sol:將許多特徵的分佈畫出，以及將商品特徵與消費者特徵進行比較。例如：在category_3中，值為A、B、C。根據分析我們發現在target的均值上，A>B>C，因此將特徵轉換為A:2、B:1、C:0
   * 原始資料龐大且分散，需要多層處理。主表上只有3個特徵，最後我們共造出84個特徵
-  * 檔案很大，導致部署到ShinyIO或prepocessing、modeling時，會因為out of memory無法正常運作。
+    * sol:先將商品的主表中重複和缺值的商品進行處理，接著分別針對過去和近期資料groupby消費者進行整合，最後將過去和近期資料進行比較
+  * 檔案很大，導致部署到ShinyIO、prepocessing或modeling時，會因為out of memory等情況無法正常運作。
+    * sol:將 input 檔案處理過後再上傳，只留下處理後的資料，去除原始資料
+    * 把function拆開一行一行執行
+    * 降低資料量，隨機選取
+
 
 ## References
 * Some of our feature engineering is inspired by this notebook: https://www.kaggle.com/samaujs/elo-eda-ml
