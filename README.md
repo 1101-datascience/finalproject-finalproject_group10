@@ -24,7 +24,7 @@ Rscript modeling.R --train train_0109_tg.csv --test test_0106.csv --report perfo
 ## Folder organization and its related information
 
 ### docs
-* Your presentation, 1101_datascience_FP_<yourID|groupName>.ppt/pptx/pdf, by **Jan. 13**
+* Your presentation, 1101_datascience_FP_10.pdf, by **Jan. 13**
 * Any related document for the final project
   * papers
   * software user guide
